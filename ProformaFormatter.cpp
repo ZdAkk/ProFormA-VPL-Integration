@@ -2056,8 +2056,13 @@ int main(int argc, char *argv[])
         std::exit(EXIT_FAILURE);
     }
 
-    // Check if the task is cached on Grappa and if so, don't include in the submission.
-
+    // Check if the task is cached on Grappa and if so, don't include in the submission (comment out when trying to debug the system to avoid caching).
+    if (submissionFormatter->isTaskCached(taskFileUUID, serviceURL, lmsID, lmsPassword))
+    {
+        taskfilename = taskFileUUID;
+        taskreftype = "uuid";
+    }
+    
     // Create submission.xml file
     std::string submissionXMLContent = submissionFormatter->createSubmissionXML(taskfilename, taskreftype, submission_files_names, feedbackStructure, feedbackType,
                                                                                 studentFeedbackLevel, teacherFeedbackLevel, proformaNamespaceTaskPrefix, taskGradingHintsElem, taskTestElem, maxScoreLMS, lmsURL, courseId, userId);
